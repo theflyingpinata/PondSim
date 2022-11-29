@@ -1,14 +1,10 @@
-import { Plant, Fish } from "./Fish";
+import { Population } from "./Population";
 
 type Pond = {
     //Contents
-    Species: Fish[] | Plant[]
+    Species: Population[]
     //Attributes
     FishingRate: number
-    //Functions
-    Feedings(): void
-    Reproductions(): void
-    Deaths(): void
 }
 
 
