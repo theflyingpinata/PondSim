@@ -8,7 +8,7 @@ export type FlipH<A> = {
   readonly tile: Tile<A>;
 };
 
-export type Above<A> = {
+export type Above<A> = {  //these are nil, single-species, combination, subtractive relations (make a 'negative pond' which is the fish that get ate), 
   readonly _tag: 'Above';
   readonly tiles: Tile<A>[];
 };
@@ -29,7 +29,7 @@ export type FromImage = {
   readonly img: HTMLImageElement
 };
 
-export type Tile<A, B = any> = 
+export type Tile<A, B = any> = //pond
   | Cw<A> 
   | FlipH<A> 
   | Above<A> 
@@ -37,7 +37,7 @@ export type Tile<A, B = any> =
   | Ap<A, B>
   | FromImage;
 
-type Algebra = {
+type Algebra = {   //namespace of factory functions
   cw: <A>(tile: Tile<A>) => Tile<A>,
   flipH: <A>(tile: Tile<A>) => Tile<A>,
   above: <A>(...tiles: Tile<A>[]) => Tile<A>,
@@ -46,7 +46,7 @@ type Algebra = {
   fromImage: (img: HTMLImageElement) => Tile<string>
 };
 
-const Alg: Algebra = {
+const Alg: Algebra = {//give a tag to a concatenated pond that it has been concatenated
   cw: (tile) => ({
     _tag: 'Cw',
     tile
@@ -79,3 +79,15 @@ const Alg: Algebra = {
 export {
   Alg
 };
+
+
+
+//use algebra that may contain two ponds to describe ONE pond
+  //nil pond, a basic pond, a concat pond (monoid?), composite ponds, etc
+
+  /*
+
+  a pond is a body of water, with some fish in it
+
+  take a 'pond' (population) and do something to "make it a new pond"
+  */

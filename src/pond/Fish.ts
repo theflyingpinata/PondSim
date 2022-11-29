@@ -23,4 +23,5 @@ type Fish = {
     Reproduce: (rand: number) => void
 }
 
+
 export type { Plant, Fish }
