@@ -6,8 +6,10 @@ type Pond = {
     //Attributes
     FishingRate: number
     //Functions
-    RunTimeStep(): void
-    Feedings(): void
-    Reproductions(): void
-    Deaths(): void
+    RunTimeStep: () => void
+    Feedings: () => void
+    Reproductions: () => void
+    Deaths: () => void
 }
+
+export type { Pond }
