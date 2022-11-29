@@ -1,15 +1,10 @@
-import { Plant, Fish } from "./Fish";
+import { Population } from "./Population";
 
 type Pond = {
     //Contents
-    Species: Fish[] | Plant[]
+    Species: Population[]
     //Attributes
     FishingRate: number
-    //Functions
-    RunTimeStep: () => void
-    Feedings: () => void
-    Reproductions: () => void
-    Deaths: () => void
 }
 
 export type { Pond }
