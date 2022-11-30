@@ -7,7 +7,9 @@ type Pond = {
     FishingRate: number
 }
 
+export type { Pond }
 
+/*
 type myAlgebra {
     increasePopulationNumber: function name(params:type) {
         

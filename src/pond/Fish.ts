@@ -1,8 +1,10 @@
+import { Population } from "./Population"
+
 type Fish = {
     //Identifier
     Name: string
     //Properties
-    Prey: Fish[]
+    Prey: Population[]
     FoodRequired: number
     ReproductionRate: number
     DeathRate: number
