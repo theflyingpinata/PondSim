@@ -38,7 +38,7 @@ let runTimeStep = (pond: Pond): Pond => {
 
 //preturns a test representation of a pond
 //can definately be expanded to be better
-//currently just gives a list of fish populations and their populations numbers
+//currently just gives a list of fish populations and their population numbers
 let printPond = (pond: Pond): string => {
 
     let output = "Species: \n"
