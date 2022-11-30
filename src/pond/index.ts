@@ -52,3 +52,5 @@ const API: Algebra = {
         return newPond
     }
 }
+
+export { API }
