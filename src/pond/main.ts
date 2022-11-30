@@ -1,7 +1,7 @@
 import { Fish } from "./Fish";
 import { Population } from "./Population";
 import { Pond } from "./Pond";
-import { API } from ".";
+import { API } from "./index";
 
 //this is a generic fish to be used to test the implementation
 let testFish: Fish = {
@@ -49,3 +49,5 @@ let printPond = (pond: Pond): string => {
 
     return output
 }
+
+console.log("test")
