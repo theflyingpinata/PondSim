@@ -1,0 +1,86 @@
+/*import { Pond } from "./Pond"
+
+type Algebra = {
+    Concat: (pond1: Pond, pond2: Pond) => Pond
+    Feedings: (pond: Pond, rand: number) => Pond
+    Reproductions: (pond: Pond, rand: number) => Pond
+    Deaths: (pond: Pond, rand: number) => Pond
+    Fishings: (pond: Pond, rand: number) => Pond
+}
+
+export type { Algebra }*/
+
+
+import { Pond } from "./Pond"
+
+export type Combine<A> = {//assumes DIFFERENT SPECIES
+ readonly _tag:"MultiFish"
+}
+
+
+export type Reduce<A> = {//assumes DIFFERENT species
+
+}
+
+export type Add<A> = {//assumes SAME SPECIES
+//do NOT change tags; it is eaither STILL multifish, or still monofish
+//this is just called multiple times when combine is called
+}
+
+export type Subtract<A> = {// assumes SAME species
+//need to CHECK at the end how many species are in pond
+}
+
+export type Empty<A> = {
+ readonly _tag: "Empty"
+}
+
+export type Start<A> = {
+   readonly _tag: "MonoFish" 
+}
+
+
+export type Pond<A, B = any> = 
+ |Combine<A>
+ |Reduce<A>
+ |Subtract<A>
+ |Add<A>
+ |Empty<A>
+ |Start<A>
+ |Divide<A>;
+
+type Algebra = {
+    Combine: <A>(pond1: Pond, pond2: Pond) => Pond
+    Reduce: <A>(pond1: Pond, pond2: Pond) => Pond
+    Subtract: <A>(pond1: Pond, pond2: Pond) => Pond
+    Add: <A>(pond1: Pond, pond2: Pond) => Pond
+    Empty: <A>(pond1: Pond) => Pond
+    Start: <A>(specName: string, pop:number) => Pond
+    Divide: <A>(pond: Pond) => Pond[]
+    /*Feedings: (pond: Pond, rand: number) => Pond
+    Reproductions: (pond: Pond, rand: number) => Pond
+    Deaths: (pond: Pond, rand: number) => Pond
+    Fishings: (pond: Pond, rand: number) => Pond
+    //************************** */
+}
+
+const impo: Algebra = {
+    Combine: (pond1, pond2) => (),
+    Reduce: (pond1, pond2) => (),
+    Subtract: (pond1, pond2) => (),
+    Add: (pond1, pond2) => (),
+    Empty: (pond1) => (),
+    Start: (specname, pop) => (),
+    Divide: (pond) => 
+        {
+            const newPonds:Pond[] = [];
+            for(let i=0; i< pond.Species.length; i++){
+                newPonds.push(/*a new pond for every species in the big one*/);
+            }
+            return newPonds;
+        }
+    
+}
+console.log(impo);
+
+export type { Algebra }
