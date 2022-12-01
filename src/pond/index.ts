@@ -1,14 +1,40 @@
-import { Pond } from "./Pond";
-import { Algebra } from "./algebra";
+import { pipe } from 'ramda';
+import { Alg, AlgPond } from "./algebra";
+import { Population } from './Population';
 
-const API: Algebra = {
-    Concat: (pond1: Pond, pond2: Pond) => {
-        return {
-            Species: pond1.Species.concat(pond2.Species),
-            FishingRate: pond1.FishingRate
-        }
-    },
-    Feedings: (pond: Pond, rand: number) => {
+type AlgPondToAlgPond = (pond: AlgPond) => AlgPond;
+type SpreadAlgPondsToAlgPond = (...tiles: AlgPond[]) => AlgPond;
+type AlgPondRandToAlgPond = (pond: AlgPond, rand: number) => AlgPond;
+
+type PondAPI = {
+    combine: SpreadAlgPondsToAlgPond,
+    reduce: (targetPond: AlgPond, reductionPond: AlgPond) => AlgPond,
+    pure: (pop: Population) => AlgPond,
+    empty: AlgPondToAlgPond,
+    feedings: AlgPondRandToAlgPond,
+    reproductions: AlgPondRandToAlgPond,
+    deaths: AlgPondRandToAlgPond,
+    fishings: AlgPondRandToAlgPond,
+    timestep: AlgPondRandToAlgPond
+
+}
+
+const API: PondAPI = {
+    combine: (ponds) => Alg.Combine(ponds),
+    reduce: (targetPond, reductionPond) => Alg.Reduce(targetPond, reductionPond),
+    pure: (pop) => Alg.Pure(pop),
+    empty: (pond) => Alg.Empty(pond),
+    feedings: (pond, rand) =>  Alg.Feeding(pond, rand),
+    reproductions: (pond, rand) => Alg.Reproduction(pond, rand),
+    deaths: (pond, rand) => Alg.Death(pond, rand),
+    fishings: (pond, rand) => Alg.Fishing(pond, rand),
+    timestep: (pond, rand) => pipe(API.feedings, API.deaths, API.reproductions, API.fishings)(pond, rand)
+}
+
+export { API }
+
+
+    /*{
         let newPond = pond
 
         for (let i = 0; i < newPond.Species.length; i++) {
@@ -26,8 +52,9 @@ const API: Algebra = {
         }
 
         return newPond
-    },
-    Reproductions: (pond: Pond, rand: number) => {
+    }
+    ,
+    reproductions: (pond: Pond, rand: number) => {
         let newPond = pond
 
         for (let i = 0; i < newPond.Species.length; i++) {
@@ -35,9 +62,9 @@ const API: Algebra = {
                 (1 + ((Math.random() * (rand * 2)) - rand)))
         }
 
-        return newPond
+        return newPond;
     },
-    Deaths: (pond: Pond, rand: number) => {
+    deaths: (pond: Pond, rand: number) => {
         let newPond = pond
 
         for (let i = 0; i < newPond.Species.length; i++) {
@@ -47,7 +74,7 @@ const API: Algebra = {
 
         return newPond
     },
-    Fishings: (pond: Pond, rand: number) => {
+    fishings: (pond: Pond, rand: number) => {
         let newPond = pond
 
         for (let i = 0; i < newPond.Species.length; i++) {
@@ -62,6 +89,4 @@ const API: Algebra = {
 
         return newPond
     }
-}
-
-export { API }
+    */
