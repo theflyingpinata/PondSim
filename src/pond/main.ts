@@ -21,31 +21,34 @@ let bass: Fish = {
     ReproductionRate: 1.25,
     DeathRate: 0.75
 }
+
+//this is a generic population made with the generic fish used to test the implementation
+let bassPop: Population = {
+    Type: bass,
+    Population: 150
+}
+
 let salmon: Fish = {
     Name: "Salmon",
-    Prey: [],
+    Prey: [bassPop],
     FoodRequired: 0.8,
     ReproductionRate: 1.25,
     DeathRate: 0.75
 }
 
-//this is a generic population made with the generic fish used to test the implementation
-let bassPop: Population = {
-    Type: bass,
-    Population: 100
-}
 let salmonPop: Population = {
     Type: salmon,
-    Population: 100
+    Population: 70
 }
-
 
 const first = API.pure(bassPop);
 const second = API.pure(salmonPop);
 const combined = API.combine(second, first, first);
-const reproduction = API.fishings(second, 3);
+const reproduction = API.feedings(second, 0.1);
+const pop = API.combine(reproduction, first);
 
-const firstSimulate = simulate(combined);
+const firstSimulate = simulate(pop);
 renderSimulation(firstSimulate)(ctx);
 
+console.log(bassPop.Population);
 console.log("test")

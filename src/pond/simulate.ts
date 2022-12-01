@@ -17,18 +17,53 @@ export type result = {
 //   return repeat(Math.ceil(arr.length / n))(null)
 //     .map((_, i) =>  arr.slice(i * n, i * n + n));
 // };
-const feedings = (rand: number) => (population: result): result => population;
-const deaths = (rand: number) => (population: result): result => population;
+const feedings = (rand: number) => (population: result): result => {
+  let newResult: result = population;
+  for (let i = 0; i < newResult.Species.length; i++) {
+    for (let j = 0; j < newResult.Species[i].Prey.length; j++) {
+      newResult.Species[i].Prey[j].Population -=
+        ((newResult.Populations[i] * newResult.Species[i].FoodRequired) *
+          (1 + ((Math.random() * (rand * 2)) - rand))) / newResult.Species[i].Prey.length
+
+      //if the prey is eaten to extinction, some of the fish will die from lack of food
+      if (newResult.Species[i].Prey[j].Population <= 0) {
+        newResult.Populations[i] -= (Math.abs(newResult.Species[i].Prey[j].Population) * newResult.Species[i].FoodRequired)
+        newResult.Species[i].Prey[j].Population = 0
+      }
+    }
+  }
+  return newResult;
+};
+const deaths = (rand: number) => (population: result): result => {
+  let newResult: result = population;
+  for (let i = 0; i < newResult.Species.length; i++) {
+    newResult.Populations[i] *= (newResult.Species[i].DeathRate *
+      (1 + ((Math.random() * (rand * 2)) - rand)))
+  }
+  return newResult;
+};
 
 const reproductions = (rand: number) => (population: result): result => {
   let newResult: result = population;
   for (let i = 0; i < newResult.Species.length; i++) {
     newResult.Populations[i] *= (newResult.Species[i].ReproductionRate * (1 + ((Math.random() * (rand * 2)) - rand)));
   }
-  return population;
+  return newResult;
 };
 
-const fishings = (rand: number) => (population: result): result => population;
+const fishings = (rand: number) => (population: result): result => {
+  let newResult: result = population;
+  for (let i = 0; i < newResult.Species.length; i++) {
+    newResult.Populations[i] *= (10 *
+      (1 + ((Math.random() * (rand * 2)) - rand)))
+
+    //makes sure that the species never get fished into negative population
+    if (newResult.Populations[i] <= 0) {
+      newResult.Populations[i] = 0
+    }
+  }
+  return newResult;
+};
 
 const combineResults = (result1: result, result2: result): result => {//change these to AlgPonds????
   let newResult: result = result1;

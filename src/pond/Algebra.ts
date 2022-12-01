@@ -111,22 +111,22 @@ const Alg: Algebra = {
         pop
     }),
     Feeding: (pond, rand) => ({
-        _tag: 'Empty',
+        _tag: 'Feeding',
         pond,
         rand
     }),
     Death: (pond, rand) => ({
-        _tag: 'Empty',
+        _tag: 'Death',
         pond,
         rand
     }),
     Reproduction: (pond, rand) => ({
-        _tag: 'Empty',
+        _tag: 'Reproduction',
         pond,
         rand
     }),
     Fishing: (pond, rand) => ({
-        _tag: 'Empty',
+        _tag: 'Fishing',
         pond,
         rand
     }),
