@@ -1,25 +1,22 @@
 import { result } from "./simulate";
 
-export const renderRaster = (raster: result) => (ctx: CanvasRenderingContext2D) => {  
-  for (let i = 0; i < result.Species.length; i++) {
-    let returnString = "Fish";
-    if (newResult.Species.includes(result2.Species[i])) {
-      newResult.Populations[newResult.Species.indexOf(result2.Species[i])] += result2.Populations[i];
-    }
-    else {
-      newResult.Species.push(result2.Species[i]);
-      newResult.Populations.push(result2.Populations[i]);
-    }
-  }
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.0)';
-  ctx.fillRect(0, 0, raster.length, raster[0].length);
+export const renderSimulation = (simulate: result) => (ctx: CanvasRenderingContext2D) => {
   
-  for (let i = 0; i < raster.length; i++) {
-    for (let j = 0; j < raster[i].length; j++) {
-      ctx.fillStyle = raster[i][j];
-      ctx.fillRect(j, i, 1, 1);
-    }
+  ctx.font = '48px serif';
+  ctx.fillText(simulate.Populations[0], 100, 500);
+  ctx.fillText("Pond", 100, 50);
+  //let returnString = "Pond\n";
+
+  ctx.font = '12px serif';
+  for (let i = 0; i < simulate.Species.length; i++) {
+    // Fish first
+    let returnString = `${simulate.Species[i].Name} - Population: ${simulate.Populations[i]}\n`;
+    ctx.fillText(returnString, 100 , 50 + ((i + 1) * 15));
   }
+
+  //ctx.font = '48px serif';
+ // ctx.fillText(returnString, 100, 50);
+  
   
   return ctx;
 }

@@ -3,7 +3,7 @@ import { Alg, AlgPond } from "./algebra";
 import { Population } from './Population';
 
 type AlgPondToAlgPond = (pond: AlgPond) => AlgPond;
-type SpreadAlgPondsToAlgPond = (...tiles: AlgPond[]) => AlgPond;
+type SpreadAlgPondsToAlgPond = (...ponds: AlgPond[]) => AlgPond;
 type AlgPondRandToAlgPond = (pond: AlgPond, rand: number) => AlgPond;
 
 type PondAPI = {
@@ -20,7 +20,7 @@ type PondAPI = {
 }
 
 const API: PondAPI = {
-    combine: (ponds) => Alg.Combine(ponds),
+    combine: (...ponds) => Alg.Combine(...ponds),
     reduce: (targetPond, reductionPond) => Alg.Reduce(targetPond, reductionPond),
     pure: (pop) => Alg.Pure(pop),
     empty: (pond) => Alg.Empty(pond),

@@ -19,7 +19,15 @@ export type result = {
 // };
 const feedings = (rand: number) => (population: result): result => population;
 const deaths = (rand: number) => (population: result): result => population;
-const reproductions = (rand: number) => (population: result): result => population;
+
+const reproductions = (rand: number) => (population: result): result => {
+  let newResult: result = population;
+  for (let i = 0; i < newResult.Species.length; i++) {
+    newResult.Populations[i] *= (newResult.Species[i].ReproductionRate * (1 + ((Math.random() * (rand * 2)) - rand)));
+  }
+  return population;
+};
+
 const fishings = (rand: number) => (population: result): result => population;
 
 const combineResults = (result1: result, result2: result): result => {//change these to AlgPonds????
@@ -47,16 +55,16 @@ const reduceResults = (result1: result, result2: result): result => {//change th
 
 export type Raster<T> = T[][];
 
-export const simulate = /* (other parameter) => */(randomSeed: number) => match({
+export const simulate = /* (other parameter) => */  match({
   Feeding: ({ pond, rand }): result => {
     return pipe(
-      simulate(randomSeed),
+      simulate,
       feedings(rand)
     )(pond);
   },
   Reproduction: ({ pond, rand }): result => {
     return pipe(
-      simulate(randomSeed),
+      simulate,
       reproductions(rand)
     )(pond);
   },
@@ -68,18 +76,18 @@ export const simulate = /* (other parameter) => */(randomSeed: number) => match(
   },
   Combine: ({ ponds }): result => {
     if (ponds.length === 0) throw new Error('Hey bozo cant combine deez nuts');//error
-    if (ponds.length === 1) return simulate(randomSeed)(ponds[0]);
+    if (ponds.length === 1) return simulate(ponds[0]);
 
     return combineResults(
-      simulate(randomSeed)(ponds[0]),
-      simulate(randomSeed)(Alg.Combine(...ponds.slice(1))));//can we go recursive here?
-    
+      simulate(ponds[0]),
+      simulate(Alg.Combine(...ponds.slice(1))));//can we go recursive here?
+
   },
   Reduce: ({ targetPond, reductionPond }): result => {
     return reduceResults(
-      simulate(randomSeed)(targetPond),
-      simulate(randomSeed)(reductionPond));//can we go recursive here?
-    
+      simulate(targetPond),
+      simulate(reductionPond));//can we go recursive here?
+
   },
   Empty: ({ pond }): result => {
     return {
@@ -89,13 +97,13 @@ export const simulate = /* (other parameter) => */(randomSeed: number) => match(
   },
   Death: ({ pond, rand }): result => {
     return pipe(
-      simulate(randomSeed),
+      simulate,
       deaths(rand)
     )(pond);
   },
   Fishing: ({ pond, rand }): result => {
     return pipe(
-      simulate(randomSeed),
+      simulate,
       fishings(rand)
     )(pond);
   },
