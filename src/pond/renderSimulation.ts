@@ -2,7 +2,7 @@ import { result } from "./simulate";
 
 export const renderSimulation = (simulate: result) => (ctx: CanvasRenderingContext2D) => {
   
-  ctx.font = '48px serif';
+  ctx.font = '48px Arial';
   ctx.fillText(simulate.Populations[0], 100, 500);
   ctx.fillText("Pond", 100, 50);
   //let returnString = "Pond\n";
