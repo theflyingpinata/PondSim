@@ -33,6 +33,9 @@ let runTimeStep = (pond: Pond): Pond => {
     newPond = API.Fishings(newPond, 0)
     newPond = API.Deaths(newPond, 0)
 
+    //check if any fish populations are zero and remove those fish from the pond
+    newPond.Species.filter(f => f.Population > 0)
+
     return newPond
 }
 

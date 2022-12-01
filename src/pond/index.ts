@@ -16,6 +16,12 @@ const API: Algebra = {
                 newPond.Species[i].Type.Prey[j].Population -= 
                     ((newPond.Species[i].Population * newPond.Species[i].Type.FoodRequired) * 
                     (1 + ((Math.random() * (rand * 2)) - rand))) / pond.Species[i].Type.Prey.length
+
+                //if the prey is eaten to extinction, some of the fish will die from lack of food
+                if (newPond.Species[i].Type.Prey[j].Population <= 0) {
+                    newPond.Species[i].Population -= (Math.abs(newPond.Species[i].Type.Prey[j].Population) * newPond.Species[i].Type.FoodRequired)
+                    newPond.Species[i].Type.Prey[j].Population = 0
+                }
             }
         }
 
@@ -47,6 +53,11 @@ const API: Algebra = {
         for (let i = 0; i < newPond.Species.length; i++) {
             newPond.Species[i].Population *= (newPond.FishingRate * 
                 (1 + ((Math.random() * (rand * 2)) - rand)))
+
+            //makes sure that the species never get fished into negative population
+            if (newPond.Species[i].Population <= 0) {
+                newPond.Species[i].Population = 0
+            }
         }
 
         return newPond
